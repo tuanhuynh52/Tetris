@@ -1,0 +1,97 @@
+/*
+ * Tuan Huynh TCSS 305A - Tetris
+ */
+
+package view;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.swing.JPanel;
+
+import model.Board;
+
+/**
+ * A panel to displays the game board.
+ * 
+ */
+@SuppressWarnings("serial")
+public class BoardPanel extends JPanel implements Observer {
+
+    /** Size of the padding around the actual board display. */
+    private static final int PANEL_PADDING = 10;
+
+    /** Height of the board. */
+    private final int myBoardHeight;
+
+    /** Size of the tiles of the board. */
+    private final int myTileSize;
+
+    /** 2D list of colors that represent the visual look of the board. */
+    private List<Color[]> myColorArray;
+
+    /**
+     * Constructor.
+     * 
+     * @param theBHeight height of the board
+     * @param theTileSize size of the tiles of the board
+     */
+    public BoardPanel(final int theBHeight, final int theTileSize) {
+        super();
+        myBoardHeight = theBHeight;
+        myTileSize = theTileSize;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void paintComponent(final Graphics theGraphics) {
+        super.paintComponent(theGraphics);
+
+        final Graphics2D g2d = (Graphics2D) theGraphics;
+
+        // add margin to the board
+        g2d.translate(PANEL_PADDING, PANEL_PADDING);
+
+        // draw the board
+        for (int i = myBoardHeight - 1; i >= 0; i--) {
+
+            final Color[] colorArr = myColorArray.get(i);
+
+            for (int j = 0; j < colorArr.length; j++) {
+
+                // compute for the x and y where the tile should be place
+                final int x = myTileSize * j;
+                final int y = myTileSize * (myBoardHeight - 1 - i);
+
+                // set default color to black (background of the board)
+                Color tileColor = Color.BLACK;
+
+                // add color to tile if not null
+                if (colorArr[j] != null) {
+                    tileColor = colorArr[j];
+                }
+
+                // fill in the tile
+                g2d.setColor(tileColor);
+                g2d.fill3DRect(x, y, myTileSize, myTileSize, true);
+
+            }
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void update(final Observable theObj, final Object theArg) {
+        if (theObj instanceof Board && theArg instanceof Board.BoardData) {
+            // repaint the board
+            final List<Color[]> colorArr = ((Board.BoardData) theArg).getBoardData();
+            myColorArray = colorArr;
+            repaint();
+        }
+    }
+
+}

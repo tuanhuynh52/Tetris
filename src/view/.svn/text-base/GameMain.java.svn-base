@@ -1,0 +1,32 @@
+/*
+ * Long Nguyen
+ * TCSS 305A - Tetris.
+ * Spring 2014
+ */
+
+package view;
+
+/**
+ * Main class.
+ * 
+ * @author lnguye81
+ * @version 5.31.14
+ */
+public final class GameMain {
+
+    /** 
+     * Constructor. 
+     */
+    private GameMain() {
+    }
+    
+    /**
+     * Main method.
+     * 
+     * @param theArgs the command line arguments
+     */
+    public static void main(final String[] theArgs) {
+        new TetrisGUI();
+    }
+
+}
