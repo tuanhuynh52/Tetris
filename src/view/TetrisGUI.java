@@ -54,7 +54,7 @@ public class TetrisGUI extends JPanel implements Observer {
     private static final int SMALLEST_DELAY = 50;
 
     /** The title of the window. */
-    private static final String TITLE = "TCSS 305A - Tetris";
+    private static final String TITLE = "Tetris Java";
 
     /** Game over string. */
     private static final String GAME_OVER = "GAME OVER";
